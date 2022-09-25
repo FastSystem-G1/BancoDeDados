@@ -28,6 +28,7 @@ fk_empresa INT,
 tipo_maquina VARCHAR(7),
 CHECK (tipo_maquina = 'DESKTOP' or 'TOTEM'),
 nome_identificador VARCHAR(15),
+codigo_serie VARCHAR(20),
 FOREIGN KEY(fk_empresa) REFERENCES Empresa(id_empresa)
 )AUTO_INCREMENT = 0;
 
