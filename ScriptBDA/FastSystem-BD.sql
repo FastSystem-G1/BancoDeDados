@@ -17,9 +17,11 @@ CREATE TABLE Funcionario(
 id_funcionario INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 fk_empresa INT,
 nome_funcionario VARCHAR(100),
+is_admin BOOLEAN,
 cpf_funcionario VARCHAR(11),
 email_funcionario VARCHAR(50),
 senha_funcionario VARCHAR(25),
+telefone_funcionario VARCHAR(13),
 FOREIGN KEY(fk_empresa) REFERENCES Empresa(id_empresa)
 )AUTO_INCREMENT = 100;
 
@@ -28,7 +30,7 @@ id_maquina INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 fk_empresa INT,
 tipo_maquina VARCHAR(7),
 CHECK (tipo_maquina = 'DESKTOP' or 'TOTEM'),
-nome_identificador VARCHAR(15),
+nome_maquina VARCHAR(15),
 FOREIGN KEY(fk_empresa) REFERENCES Empresa(id_empresa)
 )AUTO_INCREMENT = 0;
 
@@ -37,7 +39,7 @@ id_app INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 nome_app VARCHAR(60),
 funcao VARCHAR(45),
 prioridade INT,
-tamanho_megabytes DOUBLE
+tamanho_gigabytes DOUBLE
 )AUTO_INCREMENT = 1000;
 
 CREATE TABLE App_Maquina(
@@ -50,25 +52,33 @@ FOREIGN KEY(fk_app) REFERENCES App(id_app)
 CREATE TABLE Componente(
 id_componente INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 nome_comopoente VARCHAR(45),
-metrica_componente VARCHAR(10),
-alerta_max_componente INT,
-isAtivo BINARY,
+is_ativo BOOLEAN,
 fabricante_componente VARCHAR(45),
-modelo_componente VARCHAR(45)
+modelo_componente VARCHAR(45),
+capacidade_componente INT
 )AUTO_INCREMENT = 2000;
 
 CREATE TABLE Componente_Maquina(
 fk_componente INT,
 fk_maquina INT,
-data_hora DATETIME,
-medida FLOAT,
 FOREIGN KEY(fk_componente) REFERENCES Componente(id_componente),
 FOREIGN KEY(fk_maquina) REFERENCES Maquina(id_maquina)
 );
 
+CREATE TABLE Tipo_Registro(
+id_tipo_registro INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
+descricao_tipo VARCHAR(20)
+);
+
 CREATE TABLE Registro(
+fk_componente INT,
+fk_maquina INT,
 data_hora DATETIME,
-medida FLOAT
+medida FLOAT,
+fk_tipo_registro INT,
+FOREIGN KEY(fk_componente) REFERENCES Componente(id_componente),
+FOREIGN KEY(fk_maquina) REFERENCES Maquina(id_maquina),
+FOREIGN KEY(fk_tipo_registro) REFERENCES Tipo_Registro(id_tipo_registro)
 );
 
 INSERT INTO Empresa (nome_empresa, cnpj_empresa, cep_empresa, numero_empresa, telefone_empresa, nome_representante, email_empresa, senha_empresa)
@@ -78,3 +88,8 @@ INSERT INTO Empresa (nome_empresa, cnpj_empresa, cep_empresa, numero_empresa, te
 		('KFC Av.Paulista', '57992929000161', '04913140', 885, '(11)8485-6547', 'Ivete Sangalo', 'kfc885@gmail.com', '12345678');
 
 SELECT * FROM Empresa;
+
+INSERT INTO Funcionario(fk_empresa, nome_funcionario, is_admin, cpf_funcionario, email_funcionario, senha_funcionario, telefone_funcionario)
+	 VALUES (2, 'Cleber', true, '55500088833', 'felipe@gmail.com', '12345678', 11984564858);
+     
+SELECT * FROM Funcionario;
