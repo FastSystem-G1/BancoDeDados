@@ -1,6 +1,6 @@
 CREATE DATABASE FastSystem;
 USE FastSystem;
-
+DROP DATABASE FastSystem;
 CREATE TABLE Empresa(
 id_empresa INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 nome_empresa VARCHAR(100),
@@ -39,15 +39,10 @@ id_app INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 nome_app VARCHAR(60),
 funcao VARCHAR(45),
 prioridade INT,
-tamanho_gigabytes DOUBLE
+tamanho_gigabytes DOUBLE,
+fk_empresa INT,
+FOREIGN KEY (fk_empresa) REFERENCES Empresa (id_empresa)
 )AUTO_INCREMENT = 1000;
-
-CREATE TABLE App_Maquina(
-fk_maquina INT,
-fk_app INT,
-FOREIGN KEY(fk_maquina) REFERENCES Maquina(id_maquina),
-FOREIGN KEY(fk_app) REFERENCES App(id_app)
-);
 
 CREATE TABLE Componente(
 id_componente INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -57,6 +52,7 @@ fabricante_componente VARCHAR(45),
 modelo_componente VARCHAR(45),
 capacidade_componente INT
 )AUTO_INCREMENT = 2000;
+
 
 CREATE TABLE Componente_Maquina(
 fk_componente INT,
