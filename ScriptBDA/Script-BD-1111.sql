@@ -112,25 +112,32 @@ INSERT INTO Tipo_Registro VALUES
 SELECT * FROM Maquina;
 
 SELECT id_componente FROM Empresa
-		INNER JOIN Maquina ON Empresa.id_empresa = maquina.fk_empresa
-        INNER JOIN Componente_Maquina ON Maquina.id_maquina = Componente_Maquina.fk_maquina
-        INNER JOIN Componente ON Componente.id_componente = Componente_Maquina.fk_componente
-        WHERE id_maquina = 1 and nome_componente LIKE 'Memória%';
+		INNER JOIN Maquina ON Empresa.id_empresa = Maquina.fk_empresa
+        INNER JOIN Componente ON Maquina.id_maquina = Componente.fk_maquina
+        WHERE id_maquina = 1 and nome_componente LIKE 'Processador%';
+        
+SELECT id_componente, nome_componente FROM Empresa
+		INNER JOIN Maquina ON Empresa.id_empresa = Maquina.fk_empresa
+        INNER JOIN Componente ON Maquina.id_maquina = Componente.fk_maquina
+        WHERE id_maquina = 1;
         
 SELECT * FROM Componente;
+SELECT * FROM Registro WHERE fk_componente = 3;
         
 UPDATE Componente SET 
 	nome_componente = 'Processadorrrrr', 
 	is_ativo = true, 
     fabricante_componente = 'GenuineIntel', 
     modelo_componente = 'Intel(R) Core(TM) i7-10610U CPU @ 1.80GHz', 
-    capacidade_componente = 10
+    capacidade_componente = 10,
+    fk_maquina = 1
 		WHERE id_componente = 1 AND nome_componente LIKE 'Processador%';
         
 UPDATE Componente SET 
 	nome_componente = 'Memóriaaaa', 
 	is_ativo = true,
-    capacidade_componente = 10
+    capacidade_componente = 10,
+    fk_maquina = 1
 		WHERE id_componente = 2 AND nome_componente LIKE 'Memória%';
         
 UPDATE Componente SET 
@@ -139,20 +146,17 @@ UPDATE Componente SET
 
 SELECT nome_empresa, nome_maquina, nome_componente FROM Empresa
 	INNER JOIN Maquina ON Empresa.id_empresa = maquina.fk_empresa
-	INNER JOIN Componente_Maquina ON Maquina.id_maquina = Componente_Maquina.fk_maquina
-    INNER JOIN Componente ON Componente.id_componente = Componente_Maquina.fk_componente;
+    INNER JOIN Componente ON Maquina.id_maquina = Componente.fk_maquina;
     
 SELECT nome_empresa, nome_maquina, nome_componente FROM Empresa
 	INNER JOIN Maquina ON Empresa.id_empresa = maquina.fk_empresa
-	INNER JOIN Componente_Maquina ON Maquina.id_maquina = Componente_Maquina.fk_maquina
-    INNER JOIN Componente ON Componente.id_componente = Componente_Maquina.fk_componente
+    INNER JOIN Componente ON Maquina.id_maquina = Componente.fk_maquina
 		WHERE id_empresa = 1 and id_maquina = 1;
         
 -- SELECT DOS RESGISTROS DE DETERMINADA EMPRESA E SUAS MÁQUINAS
 SELECT id_empresa, nome_maquina, data_hora, medida FROM Empresa
 	INNER JOIN Maquina ON Empresa.id_empresa = maquina.fk_empresa
-	INNER JOIN Componente_Maquina ON Maquina.id_maquina = Componente_Maquina.fk_maquina
-    INNER JOIN Componente ON Componente.id_componente = Componente_Maquina.fk_componente
+    INNER JOIN Componente ON Maquina.id_maquina = Componente.fk_maquina
     INNER JOIN Registro ON Registro.fk_componente = Componente.id_componente
 		WHERE id_empresa = 2;
         
