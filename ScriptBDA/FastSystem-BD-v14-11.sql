@@ -1,7 +1,7 @@
 CREATE DATABASE FastSystem;
 USE FastSystem;
 
-DROP DATABASE FastSystem;
+-- DROP DATABASE FastSystem;
 
 CREATE TABLE Empresa(
 id_empresa INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -14,17 +14,22 @@ representante VARCHAR(100),
 email_empresa VARCHAR(50)
 )AUTO_INCREMENT = 0;
 
+INSERT INTO Empresa VALUES 
+(null, 'FastSystem', '123456789', 02535412, 1522, 11942563656, 'Endryl', "endryl@gmail.com");
+
 CREATE TABLE Funcionario(
 id_funcionario INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 fk_empresa INT,
 nome_funcionario VARCHAR(100),
-is_admin BINARY(1),
+is_admin BOOLEAN,
 cpf_funcionario VARCHAR(11),
 email_funcionario VARCHAR(50),
 senha_funcionario VARCHAR(25),
 telefone_funcionario VARCHAR(13),
 FOREIGN KEY(fk_empresa) REFERENCES Empresa(id_empresa)
 )AUTO_INCREMENT = 100;
+
+INSERT INTO Funcionario VALUES(null, 1, 'Gerson', 1, '11122233344', 'gerson@gmail.com', '12345678', '(11)912341234');
 
 CREATE TABLE Maquina(
 id_maquina INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -39,10 +44,15 @@ senha_maquina VARCHAR(45),
 FOREIGN KEY(fk_empresa) REFERENCES Empresa(id_empresa)
 )AUTO_INCREMENT = 0;
 
+INSERT INTO Maquina VALUES 
+( null, 1, "DESKTOP", "Desktop 1", '', 0, 'felipe.fastsystem@gmail.com', '1234' );
+
 CREATE TABLE Categoria_App(
 id_categoria INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 nome_categoria VARCHAR(45)
 );
+
+INSERT INTO Categoria_App Values(null, 'sei lá');
 
 CREATE TABLE App(
 id_app INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -53,6 +63,8 @@ tamanho_gigabytes DOUBLE,
 fk_categoria INT,
 FOREIGN KEY (fk_categoria) REFERENCES Categoria_App(id_categoria)
 )AUTO_INCREMENT = 1000;
+
+insert into App values(null, 'Whatsapp', 'Portal', 3, 8.0, 1);
 
 CREATE TABLE App_Empresa(
 fk_empresa INT,
@@ -65,7 +77,7 @@ CREATE TABLE Registro_Processo(
 id_registro_processo INT PRIMARY KEY AUTO_INCREMENT,
 nome_processo VARCHAR(45),
 data_hora DATETIME,
-is_autorizado BINARY(1),
+is_autorizado BOOLEAN,
 fk_maquina INT,
 FOREIGN KEY (fk_maquina) references Maquina(id_maquina)
 );
@@ -86,6 +98,10 @@ id_tipo_registro INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 descricao_tipo VARCHAR(20)
 );
 
+INSERT INTO Tipo_Registro VALUES
+( null, 'GB' ),
+( null, '%' );
+
 CREATE TABLE Registro(
 data_hora DATETIME,
 medida FLOAT,
@@ -94,19 +110,6 @@ fk_componente INT,
 FOREIGN KEY(fk_componente) REFERENCES Componente(id_componente),
 FOREIGN KEY(fk_tipo_registro) REFERENCES Tipo_Registro(id_tipo_registro)
 );
-
-INSERT INTO Empresa VALUES 
-(null, 'FastSystem', 123456789, 02535412, 1522, 11942563656, 'Endryl', "endryl@gmail.com"),
-(null, 'McDonalds', 987654321, 32654845, 365, 11953145796, 'Donald McDonalds', 'dodo@gmail.com');
-
-INSERT INTO Maquina VALUES 
-( null, 1, "DESKTOP", "Desktop 1", '', 0, 'felipe.fastsystem@gmail.com', '1234' ),  
-( null, 2, "TOTEM", "Totem 1", '', 0, 'endryl.mcdonalds@gmail.com', '12345'),
-( null, 2, "DESKTOP", "Desktop 1", '', 0, 'vitoria.mcdonalds@gmail.com', '12346');
-
-INSERT INTO Tipo_Registro VALUES
-( null, 'GB' ),
-( null, '%' );
 
 -- Faça esses selects
 SELECT * FROM Maquina;
@@ -122,7 +125,6 @@ SELECT id_componente, nome_componente FROM Empresa
         WHERE id_maquina = 1;
         
 SELECT * FROM Componente;
-SELECT * FROM Registro WHERE fk_componente = 3;
         
 UPDATE Componente SET 
 	nome_componente = 'Processadorrrrr', 
@@ -162,67 +164,17 @@ SELECT id_empresa, nome_maquina, data_hora, medida FROM Empresa
         
 SELECT nome_empresa, id_maquina FROM Empresa
 	INNER JOIN Maquina ON Empresa.id_empresa = maquina.fk_empresa;
+    
+        select * from Maquina;
 
-/*
-TESTES
-SELECT * FROM Componente;
-TRUNCATE Componente;
-DROP TABLE Componente;
+SELECT * FROM Funcionario;
 
-UPDATE Componente SET nome_componente = "", is_ativo = true, fabricante_componente = "", modelo_componente = "", capacidade_componente = 0 WHERE id_componenete = 1;
+SELECT * FROM App;
 
-Processador
-INSERT INTO Componente VALUES
-( null, 'Processador', true, "GenuineIntel", 'Intel(R) Core(TM) i3-4005U CPU @ 1.70GHz', 100 );
-INSERT INTO Componente VALUES
-( null, 'Processador', true, "GenuineIntel", 'Intel(R) Core(TM) i3-4005U CPU @ 1.70GHz', 100 );
-Memória
-INSERT INTO Componente (id_componente, nome_componente, is_ativo, capacidade_componente) VALUES
-( null, 'Memória', true, 100 );
-Disco
-INSERT INTO Componente (id_componente, nome_componente, is_ativo, modelo_componente, capacidade_componente) VALUES
-( null, '\\.\PHYSICALDRIVE0', true, 'KINGSTON SA400S37240G (Unidades de disco padrão)', 240 );
+select * from App_Empresa;
 
-SELECT * FROM Componente;
-SELECT * FROM Maquina;
-DROP TABLE Componente_Maquina;
-SELECT * FROM  Componente_Maquina;
-
-INSERT INTO Componente_Maquina VALUES
-( 1, 1 ),
-( 3, 1 ),
-( 4, 1 ),
-( 2, 2 );
-
-SELECT * FROM Registro;
-TRUNCATE Registro;
-DROP TABLE Registro;
-
-INSERT INTO Registro VALUES
-( 1, 1, '2022-10-14 20:17:06', '10', 1 );
-
-SELECTS
-
-SELECT nome_empresa, id_maquina FROM Empresa
-	INNER JOIN Maquina ON Empresa.id_empresa = maquina.fk_empresa;
-
-SELECT nome_empresa, nome_maquina, nome_componente FROM Empresa
-	INNER JOIN Maquina ON Empresa.id_empresa = maquina.fk_empresa
-	INNER JOIN Componente_Maquina ON Maquina.id_maquina = Componente_Maquina.fk_maquina
-    INNER JOIN Componente ON Componente.id_componente = Componente_Maquina.fk_componente
-		WHERE id_empresa = 1 and id_maquina = 1;
-        
-SELECT * FROM Componente;
-        
-SELECT nome_maquina, id_maquina, fk_componente FROM Componente
-	INNER JOIN Componente_Maquina ON Componente_Maquina.fk_componente = Componente.id_componente
-	INNER JOIN Maquina ON Maquina.id_maquina = Componente_Maquina.fk_maquina
-		WHERE id_maquina = 1;
-        
-SELECT nome_maquina, id_maquina, fk_componente FROM Componente_Maquina
-	INNER JOIN Maquina ON Maquina.id_maquina = Componente_Maquina.fk_maquina
-		WHERE id_maquina = 1;
-        
-SELECT id_empresa, id_maquina FROM Maquina
-	INNER JOIN empresa ON empresa.id_empresa = maquina.fk_empresa
-		WHERE nome_maquina = 'Desktop 1' and email_empresa = 'endryl@gmail.com' and senha_empresa = 12345678;
+SELECT id_maquina, nome_maquina, tipo_maquina, sistema_operacional_maquina, email_maquina, senha_maquina FROM Empresa
+	INNER JOIN maquina ON Empresa.id_empresa = maquina.fk_empresa
+    WHERE fk_empresa = 2;
+    
+    SELECT * FROM Registro;
