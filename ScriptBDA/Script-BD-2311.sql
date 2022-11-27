@@ -56,7 +56,7 @@ CREATE TABLE Registro_Processo(
 id_registro_processo INT PRIMARY KEY AUTO_INCREMENT,
 nome_processo VARCHAR(45),
 data_hora DATETIME,
-is_autorizado BINARY(1),
+is_autorizado BOOLEAN,
 fk_maquina INT,
 FOREIGN KEY (fk_maquina) references Maquina(id_maquina)
 );
@@ -64,7 +64,7 @@ FOREIGN KEY (fk_maquina) references Maquina(id_maquina)
 CREATE TABLE Componente(
 id_componente INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 nome_componente VARCHAR(45),
-is_ativo BINARY(1),
+is_ativo BINARY(4),
 fabricante_componente VARCHAR(45),
 modelo_componente VARCHAR(100),
 capacidade_componente FLOAT,
@@ -92,8 +92,14 @@ INSERT INTO Empresa VALUES
 
 INSERT INTO Maquina VALUES 
 ( null, 1, "DESKTOP", "Desktop 1", '', 0, 'felipe.fastsystem@gmail.com', '1234' ),  
-( null, 2, "TOTEM", "Totem 1", '', 0, 'endryl.mcdonalds@gmail.com', '12345'),
-( null, 2, "DESKTOP", "Desktop 1", '', 0, 'vitoria.mcdonalds@gmail.com', '12346');
+( null, 2, "TOTEM", "Totem 1", '', 0, 'endryl.mcdonalds@gmail.com', '1234'),
+( null, 2, "DESKTOP", "Desktop 1", '', 0, 'vitoria.mcdonalds@gmail.com', '1234'),
+( null, 2, "DESKTOP", "Desktop 2", '', 0, 'jaqueline.mcdonalds@gmail.com', '1234' ),  
+( null, 2, "TOTEM", "Totem 2", '', 0, 'ricardo.mcdonalds@gmail.com', '1234'),
+( null, 2, "DESKTOP", "Desktop 3", '', 0, 'rafael.mcdonalds@gmail.com', '1234'),
+( null, 2, "TOTEM", "Totem 3", '', 0, 'gerson.mcdonalds@gmail.com', '1234'),
+( null, 2, "DESKTOP", "Desktop 4", '', 0, 'fernanda.mcdonalds@gmail.com', '1234'), 
+( null, 2, "DESKTOP", "Desktop 5", '', 0, 'dudu.fastsystem@gmail.com', '1234' );
 
 INSERT INTO Tipo_Registro VALUES
 ( null, 'GB' ),
@@ -106,52 +112,73 @@ INSERT INTO Funcionario VALUES
 INSERT INTO App VALUES
 ( null, 'chrome' ),
 ( null, 'WhatsApp' ),
-( null, 'AnyDesk' );
+( null, 'AnyDesk' ),
+( null, 'Code' );
 
 -- Faça esses selects
+
 SELECT nome_app FROM App_Empresa 
 JOIN App ON App.id_app = App_Empresa.fk_app
 WHERE fk_empresa = 2;
 
 SELECT nome_processo FROM Registro_Processo 
-WHERE fk_maquina = 2;
+WHERE fk_maquina = 1;
+
+SELECT * FROM Maquina;
+
+SELECT nome_processo, is_autorizado, nome_maquina FROM Registro_Processo 
+JOIN Maquina ON id_maquina = fk_maquina
+WHERE is_autorizado = 0 AND fk_empresa = 2 GROUP BY fk_maquina;
 
 SELECT nome_app FROM App_Empresa
 JOIN App ON App.id_app = App_empresa.fk_app
-WHERE fk_empresa = 2;
+WHERE fk_empresa = 1;
+
+SELECT id_empresa FROM Empresa JOIN Maquina ON id_empresa = fk_empresa WHERE id_maquina = 3;
 
 SELECT DISTINCT(COUNT(medida)), fk_maquina FROM Registro
 INNER JOIN Componente ON Componente.id_componente = Registro.fk_componente
 WHERE nome_componente LIKE 'Processador%' AND 
-data_hora BETWEEN (SELECT SEC_TO_TIME(TIME_TO_SEC(CURRENT_TIMESTAMP()) - 300)) AND CURRENT_TIMESTAMP() 
-AND medida > 40
+data_hora BETWEEN (SELECT SEC_TO_TIME(TIME_TO_SEC(CURRENT_TIMESTAMP()) - 30)) AND CURRENT_TIMESTAMP() 
+AND ((medida * 100) / capacidade_componente) > 80
 GROUP BY fk_componente;
 
-SELECT data_hora, medida FROM Registro 
-JOIN Componente ON Componente.id_componente = Registro.fk_Componente
-JOIN Maquina ON Maquina.id_maquina = Componente.fk_maquina
-WHERE fk_maquina = 2 AND nome_componente LIKE 'Processador%' AND
-data_hora BETWEEN (SELECT SEC_TO_TIME(TIME_TO_SEC(CURRENT_TIMESTAMP()) - 300)) AND CURRENT_TIMESTAMP();
+SELECT DISTINCT(COUNT(medida)), fk_maquina FROM Registro
+INNER JOIN Componente ON Componente.id_componente = Registro.fk_componente
+WHERE nome_componente LIKE 'Memória%' AND 
+data_hora BETWEEN (SELECT SEC_TO_TIME(TIME_TO_SEC(CURRENT_TIMESTAMP()) - 30)) AND CURRENT_TIMESTAMP() 
+AND ((medida * 100) / capacidade_componente) > 80
+GROUP BY fk_componente;
 
-SELECT data_hora, medida FROM Registro 
+SELECT data_hora, ((medida * 100) / capacidade_componente) AS Uso, (100 - ((medida * 100) / capacidade_componente) ) as Livre FROM Registro 
 JOIN Componente ON Componente.id_componente = Registro.fk_Componente
 JOIN Maquina ON Maquina.id_maquina = Componente.fk_maquina
-WHERE fk_maquina = 3 AND nome_componente LIKE 'Processador%' AND
-data_hora BETWEEN (SELECT SEC_TO_TIME(TIME_TO_SEC(CURRENT_TIMESTAMP()) - 300)) AND CURRENT_TIMESTAMP();
+WHERE fk_maquina = 2 AND nome_componente LIKE 'Memória%' AND
+data_hora BETWEEN (SELECT SEC_TO_TIME(TIME_TO_SEC(CURRENT_TIMESTAMP()) - 30)) AND CURRENT_TIMESTAMP();
 
 SELECT * FROM Maquina;
 
-SELECT SEC_TO_TIME(TIME_TO_SEC(CURRENT_TIMESTAMP()) - 300);
+SELECT SEC_TO_TIME(TIME_TO_SEC(CURRENT_TIMESTAMP()) - 30);
 SELECT CURRENT_TIMESTAMP();
 
 SELECT * FROM App_Empresa;
-DELETE FROM App_Empresa WHERE fk_empresa = 1 AND fk_app = 1000;
 
 SELECT * FROM Maquina
 INNER JOIN Empresa ON Empresa.id_empresa = Maquina.fk_empresa
 WHERE id_empresa = 2;
 
 SELECT * FROM Registro_Processo;
+
+SELECT nome_processo, is_autorizado, nome_maquina, data_hora FROM Registro_Processo 
+JOIN Maquina ON id_maquina = fk_maquina
+WHERE is_autorizado = 0 AND fk_empresa = 2 AND 
+DATE_FORMAT (data_hora,'%d/%m/%Y') = DATE_FORMAT (NOW(), '%d/%m/%Y')
+GROUP BY fk_maquina;
+
+SELECT nome_processo, is_autorizado, nome_maquina, data_hora FROM Registro_Processo 
+JOIN Maquina ON id_maquina = fk_maquina
+WHERE is_autorizado = 0 AND fk_empresa = 2
+GROUP BY fk_maquina;
 
 SELECT id_componente FROM Empresa
 		INNER JOIN Maquina ON Empresa.id_empresa = Maquina.fk_empresa
@@ -288,4 +315,4 @@ SELECT nome_maquina, id_maquina, fk_componente FROM Componente_Maquina
         
 SELECT id_empresa, id_maquina FROM Maquina
 	INNER JOIN empresa ON empresa.id_empresa = maquina.fk_empresa
-		WHERE nome_maquina = 'Desktop 1' and email_empresa = 'endryl@gmail.com' and senha_empresa = 12345678;
+		WHERE nome_maquina = 'Desktop 1' and email_empresa = 'endryl@gmail.com' and senha_empresa = 12345678;*/
