@@ -22,7 +22,7 @@ is_admin BINARY(1),
 cpf_funcionario VARCHAR(11),
 email_funcionario VARCHAR(50),
 senha_funcionario VARCHAR(25),
-telefone_funcionario VARCHAR(13),
+telefone_funcionario VARCHAR(14),
 FOREIGN KEY(fk_empresa) REFERENCES Empresa(id_empresa)
 )AUTO_INCREMENT = 100;
 
