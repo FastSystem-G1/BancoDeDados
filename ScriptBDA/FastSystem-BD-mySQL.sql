@@ -87,33 +87,35 @@ FOREIGN KEY(fk_tipo_registro) REFERENCES Tipo_Registro(id_tipo_registro)
 );
 
 INSERT INTO Empresa VALUES 
-(null, 'FastSystem', 123456789, 02535412, 1522, 11942563656, 'Endryl', "endryl@gmail.com"),
-(null, 'McDonalds', 987654321, 32654845, 365, 11953145796, 'Donald McDonalds', 'dodo@gmail.com');
-
-INSERT INTO Maquina VALUES 
-( null, 1, "DESKTOP", "Desktop 1", '', 0, 'felipe.fastsystem@gmail.com', '1234' ),  
-( null, 2, "TOTEM", "Totem 1", '', 0, 'endryl.mcdonalds@gmail.com', '1234'),
-( null, 2, "DESKTOP", "Desktop 1", '', 0, 'vitoria.mcdonalds@gmail.com', '1234'),
-( null, 2, "DESKTOP", "Desktop 2", '', 0, 'jaqueline.mcdonalds@gmail.com', '1234' ),  
-( null, 2, "TOTEM", "Totem 2", '', 0, 'ricardo.mcdonalds@gmail.com', '1234'),
-( null, 2, "DESKTOP", "Desktop 3", '', 0, 'rafael.mcdonalds@gmail.com', '1234'),
-( null, 2, "TOTEM", "Totem 3", '', 0, 'gerson.mcdonalds@gmail.com', '1234'),
-( null, 2, "DESKTOP", "Desktop 4", '', 0, 'fernanda.mcdonalds@gmail.com', '1234'), 
-( null, 2, "DESKTOP", "Desktop 5", '', 0, 'dudu.fastsystem@gmail.com', '1234' );
-
-INSERT INTO Tipo_Registro VALUES
-( null, 'GB' ),
-( null, '%' );
+(null, 'Fast Food 1', 123456789, 02535412, 1522, 11942563656, 'Endryl', "admin.fastfood1@gmail.com"),
+(null, 'Fast Food 2', 987654321, 32654845, 365, 11953145796, 'Donald McDonalds', 'admin.fastfood2@gmail.com');
 
 INSERT INTO Funcionario VALUES 
-(null, 1, 'Endryl', 0, 12345678912, 'endryl@gmail.com', 12345678, '942518747'),
-(null, 2, 'Felipe', 1, 98765432112, 'felipe@gmail.com', 12345678, '965321547');
+(null, 1, 'Endryl', 1, 12345678912, 'endryl@gmail.com', 12345678, '942518747'),
+(null, 1, 'Alex', 0, 12345678912, 'alex@gmail.com', 12345678, '942518747'),
+(null, 2, 'Felipe', 1, 98765432112, 'felipe@gmail.com', 12345678, '965321547'),
+(null, 2, 'Gerson', 0, '12345678912', 'gerson@gmail.com', 12345678, '942518747');
+
+INSERT INTO Maquina VALUES 
+(null, 1, 'DESKTOP', 'Admin PC', '', 0, 'admin.fastfood1@gmail.com', '1234' ),
+(null, 2, 'TOTEM', 'Caixa 1', '', 0, 'caixa1.fastfood2@gmail.com', '1234'),
+(null, 2, 'DESKTOP', 'Admin PC', '', 0, 'admin.fastfood2@gmail.com', '1234'),
+(null, 2, 'DESKTOP', 'Caixa 2', '', 0, 'caixa2.fastfood2@gmail.com', '1234' ),
+(null, 2, 'TOTEM', 'Caixa 3', '', 0, 'caixa3.fastfood2@gmail.com', '1234'),
+(null, 2, 'DESKTOP', 'Totem 1', '', 0, 'totem1.fastfood2s@gmail.com', '1234'),
+(null, 2, 'TOTEM', 'Totem 2', '', 0, 'totem2.fastfood2@gmail.com', '1234'),
+(null, 2, 'DESKTOP', 'Totem 3', '', 0, 'totem3.fastfood2@gmail.com', '1234'), 
+(null, 2, 'DESKTOP', 'Caixa 4', '', 0, 'caixa4.fastfood2@gmail.com', '1234' ); 
 
 INSERT INTO App VALUES
-( null, 'chrome' ),
-( null, 'WhatsApp' ),
-( null, 'AnyDesk' ),
-( null, 'Code' );
+(null, 'chrome'),
+(null, 'WhatsApp'),
+(null, 'AnyDesk'),
+(null, 'Code');
+
+INSERT INTO Tipo_Registro VALUES
+(null, 'GB'),
+(null, '%');
 
 -- Faça esses selects
 SELECT * FROM Empresa;
