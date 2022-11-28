@@ -1,4 +1,6 @@
-CREATE TABLE Empresa(
+USE FastSystem;
+
+CREATE TABLE Empresa (
 	id_empresa INT PRIMARY KEY IDENTITY(1,1),
 	nome_empresa VARCHAR(100),
 	cnpj_empresa VARCHAR (14),
@@ -9,14 +11,7 @@ CREATE TABLE Empresa(
 	email_empresa VARCHAR(50)
 );
 
-
-
-INSERT INTO Empresa VALUES
-('FastSystem', 123456789, 02535412, 1522, '11942563656', 'Endryl', 'endryl@gmail.com'),
-('McDonalds', 987654321, 32654845, 365, '11953145796', 'Ronald McDonalds', 'dodo@gmail.com');
-
-
-CREATE TABLE Funcionario(
+CREATE TABLE Funcionario (
 	id_funcionario INT PRIMARY KEY IDENTITY(1,1),
 	fk_empresa INT,
 	nome_funcionario VARCHAR(100),
@@ -24,16 +19,11 @@ CREATE TABLE Funcionario(
     	cpf_funcionario VARCHAR(11),
     	email_funcionario VARCHAR(50),
     	senha_funcionario VARCHAR(25),
-    	telefone_funcionario VARCHAR(13),
+    	telefone_funcionario VARCHAR(14),
 	FOREIGN KEY(fk_empresa) REFERENCES Empresa(id_empresa)
 );
 
-INSERT INTO Funcionario VALUES 
-(1, 'Endryl', 1, '12345678912', 'endryl@gmail.com', '12345678', '942518747'),
-(2, 'Felipe', 1, '98765432112', 'felipe@gmail.com', '12345678', '965321547');
-
-
-CREATE TABLE Maquina(
+CREATE TABLE Maquina (
 	id_maquina INT PRIMARY KEY NOT NULL IDENTITY(1,1),
 	fk_empresa INT,
 	tipo_maquina VARCHAR(7),
@@ -46,32 +36,20 @@ CREATE TABLE Maquina(
 	FOREIGN KEY(fk_empresa) REFERENCES Empresa(id_empresa)
 );
 
-
-INSERT INTO Maquina VALUES 
-(1, 'DESKTOP', 'Desktop 1', '', 0, 'felipe.fastsystem@gmail.com', '1234' ),  
-(2, 'TOTEM', 'Totem 1', '', 0, 'endryl.mcdonalds@gmail.com', '12345'),
-(2, 'DESKTOP', 'Desktop 1', '', 0, 'vitoria.mcdonalds@gmail.com', '12346');
-
-
-CREATE TABLE App(
+CREATE TABLE App (
 	id_app INT PRIMARY KEY NOT NULL IDENTITY(1000,1),
 	nome_app VARCHAR(60)
 );
 
-INSERT INTO App VALUES
-('Chrome' ),
-('WhatsApp' ),
-('AnyDesk' );
-
-CREATE TABLE App_Empresa(
-	fk_empresa INT PRIMARY KEY NOT NULL IDENTITY(1,1),
+CREATE TABLE App_Empresa (
+	fk_empresa INT,
 	fk_app INT,
 	FOREIGN KEY(fk_empresa) REFERENCES Empresa(id_empresa),
 	FOREIGN KEY(fk_app) REFERENCES App(id_app),
 	PRIMARY KEY (fk_empresa, fk_app)
 );
 
-CREATE TABLE Registro_Processo(
+CREATE TABLE Registro_Processo (
 	id_registro_processo INT PRIMARY KEY NOT NULL IDENTITY(1,1),
 	nome_processo VARCHAR(45),
 	data_hora DATETIME,
@@ -80,7 +58,7 @@ CREATE TABLE Registro_Processo(
 	FOREIGN KEY (fk_maquina) references Maquina(id_maquina)
 );
 
-CREATE TABLE Componente(
+CREATE TABLE Componente (
 	id_componente INT PRIMARY KEY NOT NULL IDENTITY(1,1),
 	nome_componente VARCHAR(45),
 	is_ativo BIT,
@@ -92,19 +70,12 @@ CREATE TABLE Componente(
 );
 
 
-CREATE TABLE Tipo_Registro(
+CREATE TABLE Tipo_Registro (
 id_tipo_registro INT PRIMARY KEY NOT NULL IDENTITY(1,1),
 descricao_tipo VARCHAR(5)
 );
 
-
-
-INSERT INTO Tipo_Registro VALUES
-( 'GB' ),
-( '%' );
-
-
-CREATE TABLE Registro(
+CREATE TABLE Registro (
 	data_hora DATETIME2,
 	medida FLOAT,
 	fk_tipo_registro INT,
@@ -112,3 +83,25 @@ CREATE TABLE Registro(
 	FOREIGN KEY(fk_componente) REFERENCES Componente(id_componente),
 	FOREIGN KEY(fk_tipo_registro) REFERENCES Tipo_Registro(id_tipo_registro)
 );
+
+INSERT INTO Empresa VALUES
+('FastSystem', 123456789, 02535412, 1522, '11942563656', 'Endryl', 'endryl@gmail.com'),
+('McDonalds', 987654321, 32654845, 365, '11953145796', 'Ronald McDonalds', 'dodo@gmail.com');
+
+INSERT INTO Funcionario VALUES 
+(1, 'Endryl', 1, '12345678912', 'endryl@gmail.com', '12345678', '942518747'),
+(2, 'Felipe', 1, '98765432112', 'felipe@gmail.com', '12345678', '965321547');
+
+INSERT INTO Maquina VALUES 
+(1, 'DESKTOP', 'Desktop 1', '', 0, 'felipe.fastsystem@gmail.com', '1234' ),  
+(2, 'TOTEM', 'Totem 1', '', 0, 'endryl.mcdonalds@gmail.com', '12345'),
+(2, 'DESKTOP', 'Desktop 1', '', 0, 'vitoria.mcdonalds@gmail.com', '12346');
+
+INSERT INTO App VALUES
+('Chrome' ),
+('WhatsApp' ),
+('AnyDesk' );
+
+INSERT INTO Tipo_Registro VALUES
+( 'GB' ),
+( '%' );
