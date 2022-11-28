@@ -14,17 +14,26 @@ representante VARCHAR(100),
 email_empresa VARCHAR(50)
 )AUTO_INCREMENT = 0;
 
+INSERT INTO Empresa VALUES 
+(null, 'Fast Food 1', 123456789, 02535412, 1522, 11942563656, 'Endryl', "admin.fastfood1@gmail.com"),
+(null, 'Fast Food 2', 987654321, 32654845, 365, 11953145796, 'Donald McDonalds', 'admin.fastfood2@gmail.com');
+
 CREATE TABLE Funcionario(
 id_funcionario INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 fk_empresa INT,
 nome_funcionario VARCHAR(100),
-is_admin BINARY(1),
+is_admin BOOLEAN,
 cpf_funcionario VARCHAR(11),
 email_funcionario VARCHAR(50),
 senha_funcionario VARCHAR(25),
 telefone_funcionario VARCHAR(14),
 FOREIGN KEY(fk_empresa) REFERENCES Empresa(id_empresa)
 )AUTO_INCREMENT = 100;
+
+INSERT INTO Funcionario VALUES 
+(null, 1, 'Endryl', 1, 12345678912, 'endryl@gmail.com', 12345678, '942518747'),
+(null, 1, 'Alex', 0, 12345678912, 'alex@gmail.com', 12345678, '942518747'),
+(null, 2, 'Felipe', 1, 98765432112, 'felipe@gmail.com', 12345678, '965321547');
 
 CREATE TABLE Maquina(
 id_maquina INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
@@ -39,10 +48,27 @@ senha_maquina VARCHAR(45),
 FOREIGN KEY(fk_empresa) REFERENCES Empresa(id_empresa)
 )AUTO_INCREMENT = 0;
 
+INSERT INTO Maquina VALUES 
+( null, 1, "DESKTOP", "Admin PC", '', 0, 'admin.fastfood1@gmail.com', '1234' ),
+( null, 2, "TOTEM", "Totem 1", '', 0, 'endryl.fastfood2@gmail.com', '1234'),
+( null, 2, "DESKTOP", "Admin PC", '', 0, 'admin.fastfood2@gmail.com', '1234'),
+( null, 2, "DESKTOP", "Desktop 2", '', 0, 'jaqueline.fastfood2@gmail.com', '1234' ),  
+( null, 2, "TOTEM", "Totem 2", '', 0, 'ricardo.fastfood2@gmail.com', '1234'),
+( null, 2, "DESKTOP", "Desktop 3", '', 0, 'rafael.fastfood2s@gmail.com', '1234'),
+( null, 2, "TOTEM", "Totem 3", '', 0, 'gerson.fastfood2@gmail.com', '1234'),
+( null, 2, "DESKTOP", "Desktop 4", '', 0, 'fernanda.fastfood2@gmail.com', '1234'), 
+( null, 2, "DESKTOP", "Desktop 5", '', 0, 'dudu.fastfood2@gmail.com', '1234' );
+
 CREATE TABLE App(
 id_app INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 nome_app VARCHAR(60)
 )AUTO_INCREMENT = 1000;
+
+INSERT INTO App VALUES
+( null, 'chrome' ),
+( null, 'WhatsApp' ),
+( null, 'AnyDesk' ),
+( null, 'Code' );
 
 CREATE TABLE App_Empresa(
 fk_empresa INT,
@@ -77,6 +103,10 @@ id_tipo_registro INT PRIMARY KEY NOT NULL AUTO_INCREMENT,
 descricao_tipo VARCHAR(20)
 );
 
+INSERT INTO Tipo_Registro VALUES
+( null, 'GB' ),
+( null, '%' );
+
 CREATE TABLE Registro(
 data_hora DATETIME,
 medida FLOAT,
@@ -85,35 +115,6 @@ fk_componente INT,
 FOREIGN KEY(fk_componente) REFERENCES Componente(id_componente),
 FOREIGN KEY(fk_tipo_registro) REFERENCES Tipo_Registro(id_tipo_registro)
 );
-
-INSERT INTO Empresa VALUES 
-(null, 'FastSystem', 123456789, 02535412, 1522, 11942563656, 'Endryl', "endryl@gmail.com"),
-(null, 'McDonalds', 987654321, 32654845, 365, 11953145796, 'Donald McDonalds', 'dodo@gmail.com');
-
-INSERT INTO Maquina VALUES 
-( null, 1, "DESKTOP", "Desktop 1", '', 0, 'felipe.fastsystem@gmail.com', '1234' ),  
-( null, 2, "TOTEM", "Totem 1", '', 0, 'endryl.mcdonalds@gmail.com', '1234'),
-( null, 2, "DESKTOP", "Desktop 1", '', 0, 'vitoria.mcdonalds@gmail.com', '1234'),
-( null, 2, "DESKTOP", "Desktop 2", '', 0, 'jaqueline.mcdonalds@gmail.com', '1234' ),  
-( null, 2, "TOTEM", "Totem 2", '', 0, 'ricardo.mcdonalds@gmail.com', '1234'),
-( null, 2, "DESKTOP", "Desktop 3", '', 0, 'rafael.mcdonalds@gmail.com', '1234'),
-( null, 2, "TOTEM", "Totem 3", '', 0, 'gerson.mcdonalds@gmail.com', '1234'),
-( null, 2, "DESKTOP", "Desktop 4", '', 0, 'fernanda.mcdonalds@gmail.com', '1234'), 
-( null, 2, "DESKTOP", "Desktop 5", '', 0, 'dudu.fastsystem@gmail.com', '1234' );
-
-INSERT INTO Tipo_Registro VALUES
-( null, 'GB' ),
-( null, '%' );
-
-INSERT INTO Funcionario VALUES 
-(null, 1, 'Endryl', 1, 12345678912, 'endryl@gmail.com', 12345678, '942518747'),
-(null, 2, 'Felipe', 1, 98765432112, 'felipe@gmail.com', 12345678, '965321547');
-
-INSERT INTO App VALUES
-( null, 'chrome' ),
-( null, 'WhatsApp' ),
-( null, 'AnyDesk' ),
-( null, 'Code' );
 
 -- Faça esses selects
 
