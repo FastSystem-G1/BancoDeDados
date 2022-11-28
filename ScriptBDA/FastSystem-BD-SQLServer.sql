@@ -84,24 +84,33 @@ CREATE TABLE Registro (
 	FOREIGN KEY(fk_tipo_registro) REFERENCES Tipo_Registro(id_tipo_registro)
 );
 
-INSERT INTO Empresa VALUES
-('FastSystem', 123456789, 02535412, 1522, '11942563656', 'Endryl', 'endryl@gmail.com'),
-('McDonalds', 987654321, 32654845, 365, '11953145796', 'Ronald McDonalds', 'dodo@gmail.com');
+INSERT INTO Empresa VALUES 
+('Fast Food 1', 123456789, 02535412, 1522, 11942563656, 'Endryl', "admin.fastfood1@gmail.com"),
+( 'Fast Food 2', 987654321, 32654845, 365, 11953145796, 'Donald McDonalds', 'admin.fastfood2@gmail.com');
 
 INSERT INTO Funcionario VALUES 
-(1, 'Endryl', 1, '12345678912', 'endryl@gmail.com', '12345678', '942518747'),
-(2, 'Felipe', 1, '98765432112', 'felipe@gmail.com', '12345678', '965321547');
+(1, 'Endryl', 1, 12345678912, 'endryl@gmail.com', 12345678, '942518747'),
+(1, 'Alex', 0, 12345678912, 'alex@gmail.com', 12345678, '942518747'),
+(2, 'Felipe', 1, 98765432112, 'felipe@gmail.com', 12345678, '965321547'),
+(2, 'Gerson', 0, '12345678912', 'gerson@gmail.com', 12345678, '942518747');
 
 INSERT INTO Maquina VALUES 
-(1, 'DESKTOP', 'Desktop 1', '', 0, 'felipe.fastsystem@gmail.com', '1234' ),  
-(2, 'TOTEM', 'Totem 1', '', 0, 'endryl.mcdonalds@gmail.com', '12345'),
-(2, 'DESKTOP', 'Desktop 1', '', 0, 'vitoria.mcdonalds@gmail.com', '12346');
+(1, 'DESKTOP', 'Admin PC', '', 0, 'admin.fastfood1@gmail.com', '1234' ),
+(2, 'TOTEM', 'Caixa 1', '', 0, 'caixa1.fastfood2@gmail.com', '1234'),
+(2, 'DESKTOP', 'Admin PC', '', 0, 'admin.fastfood2@gmail.com', '1234'),
+(2, 'DESKTOP', 'Caixa 2', '', 0, 'caixa2.fastfood2@gmail.com', '1234' ),
+(2, 'TOTEM', 'Caixa 3', '', 0, 'caixa3.fastfood2@gmail.com', '1234'),
+(2, 'DESKTOP', 'Totem 1', '', 0, 'totem1.fastfood2s@gmail.com', '1234'),
+(2, 'TOTEM', 'Totem 2', '', 0, 'totem2.fastfood2@gmail.com', '1234'),
+(2, 'DESKTOP', 'Totem 3', '', 0, 'totem3.fastfood2@gmail.com', '1234'), 
+(2, 'DESKTOP', 'Caixa 4', '', 0, 'caixa4.fastfood2@gmail.com', '1234' ); 
 
 INSERT INTO App VALUES
-('Chrome' ),
-('WhatsApp' ),
-('AnyDesk' );
+('chrome'),
+('WhatsApp'),
+('AnyDesk'),
+('Code');
 
 INSERT INTO Tipo_Registro VALUES
-( 'GB' ),
-( '%' );
+('GB'),
+('%');
