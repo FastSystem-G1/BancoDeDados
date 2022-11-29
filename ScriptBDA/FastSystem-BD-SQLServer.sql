@@ -1,4 +1,4 @@
-USE FastSystem;
+-- USE dbFastSystem;
 
 CREATE TABLE Empresa (
 	id_empresa INT PRIMARY KEY IDENTITY(1,1),
